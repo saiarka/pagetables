@@ -14,6 +14,7 @@ static char data_for_page_3[4096];
 
 int main(){
 
+
 size_t address_of_data_for_page_3_as_integer = (size_t) &data_for_page_3[0]; 
 size_t physical_page_number_of_data_for_page_3 = address_of_data_for_page_3_as_integer >> 12;
     // instead of >> 12, we could have written:

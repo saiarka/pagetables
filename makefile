@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -fsanitize=address 
 LDFLAGS = -lm
 
-SOURCES = main.c mlpt.c valid_check.c
+SOURCES = main.c mlpt.c valid_check.c ptbr_setup.c
 
 HEADERS = mlpt.h config.h
 
