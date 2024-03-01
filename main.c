@@ -3,13 +3,11 @@
 #include "mlpt.h"
 #include <stdalign.h>
 
-size_t ptbr;
-alignas(4096) static size_t page_of_data[512];
-
+alignas(4096)
+static size_t page_of_data[512];
 static void set_testing_ptbr(void) {
     ptbr = (size_t) &page_of_data[0];
 }
-
 int main(){
 
 set_testing_ptbr();
