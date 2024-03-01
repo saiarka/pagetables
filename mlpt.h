@@ -1,3 +1,5 @@
+#ifndef MLPT_H_
+#define MLPT_H_
 #include <stddef.h>
 /**
  * Page table base register.
@@ -21,3 +23,5 @@ size_t translate(size_t va);
 void page_allocate(size_t va);
 
 size_t valid_check(size_t page_table_entry, size_t offset_bits);
+size_t ptbr_setup(size_t va);
+#endif

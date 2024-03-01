@@ -3,7 +3,9 @@
 #include "config.h"
 #include <math.h>
 
+
 size_t translate(size_t va){
+size_t ptbr = ptbr_setup;
 size_t translated_address;
 size_t page_size = 1 << POBITS;
 size_t num_of_entries = page_size / sizeof(size_t);
