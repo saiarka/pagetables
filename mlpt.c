@@ -5,12 +5,11 @@
 
 size_t translate(size_t va){
 size_t translated_address;
-size_t page_size = 2 ^ POBITS;
+size_t page_size = 0x2 ^ POBITS;
 size_t num_of_entries = page_size / sizeof(size_t);
 size_t offset_mask = (0x1 << POBITS) - 1;
 size_t offset_bits = va & offset_mask;
 size_t vpn_seg_bits = log2(num_of_entries);
-size_t phys_address;
 size_t page_table_entry;
 size_t *address_pointer = (size_t *) ptbr;
 
@@ -23,16 +22,17 @@ if (LEVELS > 1)
     {
         vpn_mask = (0x1 << vpn_seg_bits) - 1;
         vpn_seg = va & vpn_mask;
-        phys_address = (vpn_seg * sizeof(size_t)) + address_pointer;
+        ptbr = (vpn_seg * sizeof(size_t)) + ptbr;
         page_table_entry = *address_pointer;
-        address_pointer = valid_check(page_table_entry, offset_bits);
+        ptbr = valid_check(page_table_entry, offset_bits);
         va = va >> vpn_seg_bits;
     }
-    translated_address = address_pointer;
+    address_pointer = address_pointer + offset_bits;
+    translated_address = *address_pointer;
 }else {
     vpn_mask = (0x1 << vpn_seg_bits) - 1;
     vpn_seg = va & vpn_mask;
-    phys_address = (vpn_seg * sizeof(size_t)) + address_pointer;
+    ptbr = (vpn_seg * sizeof(size_t)) + ptbr;
     page_table_entry = *address_pointer;
     translated_address = valid_check(page_table_entry, offset_bits);
 }   

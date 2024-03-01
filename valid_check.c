@@ -13,7 +13,12 @@ if (valid_check == 1)
     }
     size_t phys_page_number = page_table_entry & significant_bits;
     return_address = phys_page_number << POBITS;
-    return_address = return_address + offset_bits;
+
+   if (LEVELS == 1) 
+   {
+        return_address = return_address + offset_bits;
+   }
+
 }else {
     return_address = 0xFFFFFFFFFFFFFFFF;
 }
