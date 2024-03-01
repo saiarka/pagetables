@@ -6,12 +6,13 @@ size_t valid_check = page_table_entry & 0x1;
 size_t return_address;
 if (valid_check == 1)
 {
-    size_t significant_bits_size = 64 - POBITS;
-    size_t significant_bits = 0x0;
-    for(size_t i = 0; i < significant_bits_size; i += 1){
-        significant_bits += 0xF;
-    }
-    size_t phys_page_number = page_table_entry & significant_bits;
+    // size_t significant_bits_size = 64 - POBITS;
+    // size_t significant_bits = 0x0;
+    // for (size_t i = 0; i < significant_bits_size; i += 1)
+    // {
+        
+    // }
+    size_t phys_page_number = page_table_entry >> POBITS;
     return_address = phys_page_number << POBITS;
 
    if (LEVELS == 1) 

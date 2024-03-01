@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -Wall -Wextra -std=c99 -fsanitize=address 
 LDFLAGS = -lm
 
 SOURCES = main.c mlpt.c valid_check.c
