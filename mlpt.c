@@ -3,7 +3,6 @@
 #include "config.h"
 #include <math.h>
 
-
 size_t translate(size_t va){
 size_t translated_address;
 size_t page_size = 1 << POBITS;
@@ -13,6 +12,7 @@ size_t offset_bits = va & offset_mask;
 size_t vpn_seg_bits = log2(num_of_entries);
 size_t page_table_entry;
 size_t *address_pointer;
+size_t ptbr_copy = ptbr;
 
 va = va >> POBITS;
 size_t vpn_mask;
@@ -23,8 +23,8 @@ if (LEVELS > 1)
     {
         vpn_mask = (0x1 << vpn_seg_bits) - 1;
         vpn_seg = va & vpn_mask;
-        ptbr = (vpn_seg * sizeof(size_t)) + ptbr;
-        address_pointer = (size_t *) ptbr;
+        ptbr_copy = (vpn_seg * sizeof(size_t)) + ptbr_copy;
+        address_pointer = (size_t *) ptbr_copy;
         page_table_entry = *address_pointer;
         ptbr = valid_check(page_table_entry, offset_bits);
         va = va >> vpn_seg_bits;
@@ -34,8 +34,8 @@ if (LEVELS > 1)
 }else {
     vpn_mask = (0x1 << vpn_seg_bits) - 1;
     vpn_seg = va & vpn_mask;
-    ptbr = (vpn_seg * sizeof(size_t)) + ptbr;
-    address_pointer = (size_t *) ptbr;
+    ptbr_copy = (vpn_seg * sizeof(size_t)) + ptbr_copy;
+    address_pointer = (size_t *) ptbr_copy;
     page_table_entry = *address_pointer;
     translated_address = valid_check(page_table_entry, offset_bits);
 }   
