@@ -4,16 +4,29 @@ LDFLAGS = -lm
 
 SOURCES = main.c mlpt.c valid_check.c ptbr_setup.c
 
+OBJECTS = $(SOURCES:.c=.o)
+
 HEADERS = mlpt.h config.h
 
-TARGET = pagetable
+all: libmlpt.a
 
-$(TARGET): $(SOURCES) $(HEADERS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS)
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-	rm -f $(TARGET)
+libmlpt.a: $(OBJECTS)
+	ar rcs $@ $(OBJECTS)
 
-.PHONY: all clean
+clean: 
+	rm -f $(OBJECTS) libmlpt.a
 
-all: $(TARGET)
+# TARGET = pagetable
+
+# $(TARGET): $(SOURCES) $(HEADERS)
+# 	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS)
+
+# clean:
+# 	rm -f $(TARGET)
+
+# .PHONY: all clean
+
+# all: $(TARGET)
