@@ -91,9 +91,11 @@ if (ptbr_copy == 0 && LEVELS == 1)
     {
         perror("Error with initial data page allocated");
     }
+    memset((void*)pagetable_allocated_address, 0, sizeof(size_t) * num_of_entries);
+    memset((void*)datapage_allocated_address, 0, sizeof(size_t) * num_of_entries);
     vpn_mask = (0x1 << vpn_seg_bits) - 1;
     vpn_seg = va & vpn_mask;
-    *ptbr_pointer =(size_t)pagetable_allocated_address;
+    *ptbr_pointer = (size_t)pagetable_allocated_address;
     ptbr_copy = ptbr;
     size_t address_for_data = (size_t)datapage_allocated_address;
     size_t phys_page_number_for_data = address_for_data / (sizeof(size_t) * num_of_entries);
@@ -108,6 +110,7 @@ if (ptbr_copy == 0 && LEVELS == 1)
     {
         perror("Error with page entry allocated");
     }
+    memset((void*)multi_level_addresses[0], 0, sizeof(size_t) * num_of_entries);
     size_t level_one_address = (size_t)multi_level_addresses[0];
     ptbr_copy = (size_t)multi_level_addresses[0];
     
@@ -143,6 +146,7 @@ if (ptbr_copy == 0 && LEVELS == 1)
     {
         perror("Error with data page allocated for missing entry");
     }
+    memset((void*)datapage_allocated_address, 0, sizeof(size_t) * num_of_entries);
     size_t address_for_data = (size_t)datapage_allocated_address;
     size_t phys_page_number_for_data = address_for_data / (sizeof(size_t) * num_of_entries);
     size_t page_table_entry_for_page = (phys_page_number_for_data << POBITS) | 1;
@@ -172,6 +176,7 @@ if (ptbr_copy == 0 && LEVELS == 1)
                 if (posix_memalign((void**)&pagetable_allocated_address, sizeof(size_t) * num_of_entries, sizeof(size_t) * num_of_entries) != 0) {
                     perror("Error with initial page entry allocated");
                 }
+                memset((void*)pagetable_allocated_address, 0, sizeof(size_t) * num_of_entries);
                 size_t address_for_next_level = (size_t)pagetable_allocated_address;
                 size_t phys_page_number_for_level = address_for_next_level / (sizeof(size_t) * num_of_entries);
                 size_t page_table_entry_for_next_level_page = (phys_page_number_for_level << POBITS) | 1;
@@ -185,6 +190,7 @@ if (ptbr_copy == 0 && LEVELS == 1)
             {
                 perror("Error with data page allocated for missing entry");
             }
+            memset((void*)datapage_allocated_address, 0, sizeof(size_t) * num_of_entries);
             size_t address_for_data = (size_t)datapage_allocated_address;
             size_t phys_page_number_for_data = address_for_data / (sizeof(size_t) * num_of_entries);
             size_t page_table_entry_for_page_vpnseg = (phys_page_number_for_data << POBITS) | 1;
@@ -203,7 +209,7 @@ if (ptbr_copy == 0 && LEVELS == 1)
             {
                 perror("Error with data page allocated for missing entry");
             }
-
+            memset((void*)datapage_allocated_address, 0, sizeof(size_t) * num_of_entries);
             size_t address_for_data = (size_t)datapage_allocated_address;
             size_t phys_page_number_for_data = address_for_data / (sizeof(size_t) * num_of_entries);
             size_t page_table_entry_for_page_vpnseg = (phys_page_number_for_data << POBITS) | 1;

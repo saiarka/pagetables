@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99  
 LDFLAGS = -lm
-# -fsanitize=address
+
 SOURCES = mlpt.c valid_check.c ptbr_setup.c
 
 OBJECTS = $(SOURCES:.c=.o)
