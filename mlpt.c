@@ -133,6 +133,7 @@ if (ptbr_copy == 0 && LEVELS == 1)
         {
             perror("Error with page entry allocated");
         }
+            memset((void*)multi_level_addresses[i+1], 0, sizeof(size_t) * num_of_entries);
             if (i != (LEVELS)) 
             {
                 size_t address_for_next_level = (size_t)multi_level_addresses[i+1];
