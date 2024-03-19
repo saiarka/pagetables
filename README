@@ -1,0 +1,20 @@
+"PAGETABLES" Computer Systems and Organization II Code Repo
+
+Description:
+Pagetables are a data structure used for address and memory managment. These structures facilitate the seperation of any one process's memory accesses to 
+another process's accesses, thus preventing memory 'corruption'. For more information, look here: https://en.wikipedia.org/wiki/Page_table
+
+This project attempts to emulate the potential processes that the OS executes when utilizing pagetables to 'translate' virtual addresses.
+Mainly, two functions: translate(size_t va) and page_allocate(size_t va). These functions are exported as a library from the mlpt.h interface.
+
+
+HOW TO USE:
+Within the repo, there is a config.h file which holds two variables --> POBITS and LEVELS. POBITS refers to the 'Page Offset Bits' and LEVELS
+refers to the number of page table 'layers' or LEVELS that will be used for translation/allocation. Changing the POBITS will subsequently change the 
+number of bits in the given virtual address that will be utilized as the 'page offset' when finding the physical address. Changing LEVELS will
+change the number of page table levels used in virtual address translation. Typically, more LEVELS --> higher performance, depending upon the 
+number of entries for a given page table. 
+
+
+
+

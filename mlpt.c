@@ -129,13 +129,13 @@ if (ptbr_copy == 0 && LEVELS == 1)
         address_pointer = (size_t *) ptbr_copy;
         page_table_entry = *address_pointer;
         ptbr_copy = valid_check(page_table_entry, offset_bits); 
-        if (posix_memalign((void**)&multi_level_addresses[i+1], sizeof(size_t) * num_of_entries, sizeof(size_t) * num_of_entries) != 0) 
-        {
-            perror("Error with page entry allocated");
-        }
-            memset((void*)multi_level_addresses[i+1], 0, sizeof(size_t) * num_of_entries);
-            if (i != (LEVELS)) 
+            if (i != (LEVELS - 1)) 
             {
+                if (posix_memalign((void**)&multi_level_addresses[i+1], sizeof(size_t) * num_of_entries, sizeof(size_t) * num_of_entries) != 0) 
+                {
+                    perror("Error with page entry allocated");
+                }
+                memset((void*)multi_level_addresses[i+1], 0, sizeof(size_t) * num_of_entries);
                 size_t address_for_next_level = (size_t)multi_level_addresses[i+1];
                 size_t phys_page_number_for_level = address_for_next_level / (sizeof(size_t) * num_of_entries);
                 size_t page_table_entry_for_next_level_page = (phys_page_number_for_level << POBITS) | 1;
