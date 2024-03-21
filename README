@@ -1,10 +1,10 @@
 "PAGETABLES" Computer Systems and Organization II Code Repo
 
 Description:
-Pagetables are a data structure used for address and memory managment. These structures facilitate the seperation of any one process's memory accesses to 
+Pagetables are a data structure used for address and memory management. These structures facilitate the separation of any one process's memory accesses to 
 another process's accesses, thus preventing memory 'corruption'. For more information, look here: https://en.wikipedia.org/wiki/Page_table
 
-This project attempts to emulate the potential processes that the OS executes when utilizing pagetables to 'translate' virtual addresses.
+This project attempts to emulate the potential processes that the OS executes when utilizing page tables to 'translate' virtual addresses.
 Mainly, two functions: translate(size_t va) and page_allocate(size_t va). These functions are exported as a library from the mlpt.h interface.
 
 
