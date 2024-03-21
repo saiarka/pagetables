@@ -23,4 +23,7 @@ size_t translate(size_t va);
 void page_allocate(size_t va);
 
 size_t valid_check(size_t page_table_entry, size_t offset_bits);
+size_t data_page_allocate_page_table_entry(size_t* data_page_allocated_address, size_t num_of_entries);
+size_t page_allocate_page_table_entry(size_t* page_allocated_address, size_t num_of_entries);
+
 #endif
