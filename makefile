@@ -2,31 +2,31 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c99  
 LDFLAGS = -lm
 
-SOURCES = mlpt.c valid_check.c ptbr_setup.c
+SOURCES = main.c mlpt.c valid_check.c ptbr_setup.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
 HEADERS = mlpt.h config.h 
 
-all: libmlpt.a
+# all: libmlpt.a
 
-%.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< -o $@
+# %.o: %.c $(HEADERS)
+# 	$(CC) $(CFLAGS) -c $< -o $@
 
-libmlpt.a: $(OBJECTS)
-	ar rcs $@ $(OBJECTS)
+# libmlpt.a: $(OBJECTS)
+# 	ar rcs $@ $(OBJECTS)
 
-clean: 
-	rm -f $(OBJECTS) libmlpt.a
+# clean: 
+# 	rm -f $(OBJECTS) libmlpt.a
 
-# TARGET = pagetable
+TARGET = pagetable
 
-# $(TARGET): $(SOURCES) $(HEADERS)
-# 	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS)
+$(TARGET): $(SOURCES) $(HEADERS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS)
 
-# clean:
-# 	rm -f $(TARGET)
+clean:
+	rm -f $(TARGET)
 
-# .PHONY: all clean
+.PHONY: all clean
 
-# all: $(TARGET)
+all: $(TARGET)
