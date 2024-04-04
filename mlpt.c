@@ -118,15 +118,8 @@ if (ptbr_copy == 0 && LEVELS == 1) {
         address_pointer = (size_t *) ptbr_copy;
         page_table_entry = *address_pointer;
         ptbr_copy = valid_check(page_table_entry, offset_bits); 
-<<<<<<< HEAD
-            if (i != (LEVELS - 1)) 
-            {
-                if (posix_memalign((void**)&multi_level_addresses[i+1], sizeof(size_t) * num_of_entries, sizeof(size_t) * num_of_entries) != 0) 
-                {
-=======
             if (i != (LEVELS - 1)) {
                 if (posix_memalign((void**)&multi_level_addresses[i+1], sizeof(size_t) * num_of_entries, sizeof(size_t) * num_of_entries) != 0) {
->>>>>>> 9a1aa329883de86a82338d4e0c8bb71983b40734
                     perror("Error with page entry allocated");
                 }
                 memset((void*)multi_level_addresses[i+1], 0, sizeof(size_t) * num_of_entries);

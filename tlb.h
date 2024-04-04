@@ -28,7 +28,7 @@ struct way {
     size_t valid_bit;
     size_t tag_bits;
     int lru_tracker;
-    size_t page_table_entry;
+    size_t physical_address;
 };
 
 struct cache_set {

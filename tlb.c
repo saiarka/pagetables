@@ -8,7 +8,7 @@ struct tlb tlb = {
                 .valid_bit = 0,
                 .tag_bits = 0,
                 .lru_tracker = 0,
-                .page_table_entry= 0
+                .physical_address= 0
                 }
             },
             .is_full = 0,
@@ -50,10 +50,11 @@ size_t offset_bits = va & ((0x1 << POBITS) - 1);
 size_t index_from_address = usable_address & 0xF;
 struct cache_set set_from_index = tlb.tlb_cache[index_from_address];
 size_t va_tag_bits = usable_address >> 1; 
+size_t address_to_return;
 
 for(int i = 0; i < 4; i += 1) {
     if(set_from_index.way_array[i].tag_bits == va_tag_bits) {
-        return set_from_index.way_array[i].page_table_entry;
+        return set_from_index.way_array[i].physical_address;
     }
 }
 
@@ -61,7 +62,8 @@ if (set_from_index.is_full == 1) {
     for(int i = 0; i < 4; i += 1) {
         if(set_from_index.way_array[i].lru_tracker == 4) {
             set_from_index.way_array[i].tag_bits = va_tag_bits;
-            set_from_index.way_array[i].page_table_entry = translate(va);
+            set_from_index.way_array[i].physical_address= translate(va);
+            address_to_return = set_from_index.way_array[i].physical_address;
             set_from_index.way_array[i].valid_bit = 1;
             set_from_index.way_array[i].lru_tracker = 1;
         }else {
@@ -77,13 +79,15 @@ if (set_from_index.is_full == 1) {
     for(int i = 0; i < 4; i += 1) {
         if(set_from_index.way_array[i].valid_bit == 0) {
             set_from_index.way_array[i].tag_bits = va_tag_bits;
-            set_from_index.way_array[i].page_table_entry = translate(va);
+            set_from_index.way_array[i].physical_address= translate(va);
+            address_to_return = set_from_index.way_array[i].physical_address;
             set_from_index.way_array[i].valid_bit = 1;
             set_from_index.way_array[i].lru_tracker = 1;
         }
     }
 }
 
+return address_to_return;
 }
 
 
