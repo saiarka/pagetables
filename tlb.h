@@ -33,6 +33,7 @@ struct way {
 
 struct cache_set {
     struct way way_array[4];
+    int is_full;
     size_t lru_replacement_index;
 };
 

@@ -10,7 +10,9 @@ struct tlb tlb = {
                 .lru_tracker = 0,
                 .page_table_entry= 0
                 }
-            }
+            },
+            .is_full = 0,
+            .lru_replacement_index = 0,
         }
     }
 };
@@ -29,6 +31,10 @@ size_t index_from_address = usable_address & 0xF;
 struct cache_set set_from_index = tlb.tlb_cache[index_from_address];
 size_t va_tag_bits = usable_address >> 1; 
 
+if(translate(va) == -1) {
+    return -1;
+}
+
 for(int i = 0; i < 4; i += 1) {
     if(set_from_index.way_array[i].tag_bits == va_tag_bits) {
         return set_from_index.way_array[i].lru_tracker;
@@ -44,17 +50,39 @@ size_t offset_bits = va & ((0x1 << POBITS) - 1);
 size_t index_from_address = usable_address & 0xF;
 struct cache_set set_from_index = tlb.tlb_cache[index_from_address];
 size_t va_tag_bits = usable_address >> 1; 
-size_t page_table_entry_from_tlb;
-size_t valid_address;
 
 for(int i = 0; i < 4; i += 1) {
     if(set_from_index.way_array[i].tag_bits == va_tag_bits) {
-        page_table_entry_from_tlb = set_from_index.way_array[i].page_table_entry;
-        valid_address = valid_check(page_table_entry_from_tlb, offset_bits);
-        return valid_address + offset_bits;
+        return set_from_index.way_array[i].page_table_entry;
     }
 }
 
+if (set_from_index.is_full == 1) {
+    for(int i = 0; i < 4; i += 1) {
+        if(set_from_index.way_array[i].lru_tracker == 4) {
+            set_from_index.way_array[i].tag_bits = va_tag_bits;
+            set_from_index.way_array[i].page_table_entry = translate(va);
+            set_from_index.way_array[i].valid_bit = 1;
+            set_from_index.way_array[i].lru_tracker = 1;
+        }else {
+            set_from_index.way_array[i].lru_tracker += 1;
+        }
+    }
+}else {
+    for(int i = 0; i < 4; i += 1) {
+        if(set_from_index.way_array[i].valid_bit == 1) {
+            set_from_index.way_array[i].lru_tracker += 1;
+        }
+    }
+    for(int i = 0; i < 4; i += 1) {
+        if(set_from_index.way_array[i].valid_bit == 0) {
+            set_from_index.way_array[i].tag_bits = va_tag_bits;
+            set_from_index.way_array[i].page_table_entry = translate(va);
+            set_from_index.way_array[i].valid_bit = 1;
+            set_from_index.way_array[i].lru_tracker = 1;
+        }
+    }
+}
 
 }
 
