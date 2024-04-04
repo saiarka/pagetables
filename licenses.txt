@@ -1,0 +1,28 @@
+Licenses Considered:
+___________________________________________________
+
+1 - LGPL 
+
+The LGPL is very similar to the GPL, as the LGPL is considered to be the 'lesser' General Public License. For that reason, many of the LGPL's
+terms were agreeable, including the licenses' liability policy, availability to developers, and the capability of open distribution for users. 
+The main difference between the GPL and LGPL is their respective stances on the availability of software for proprietary users. 
+The GPL ensures that software licensed under it is available for use in free programs. The LGPL, on the other hand, does not ensure that derivative 
+works have the same license, thus promoting proprietary users/companies to sell derivative software under LGPL. For this reason, I more closely aligned
+with the 'political' standpoint of the GPL, just in terms of its stance towards free software and open-source distributions.
+
+
+2 - Boost
+The Boost license is more commonly used for C++ codebases/libraries and it employs much of the same conditions which lie under the GPL and LGPL. 
+This license is very simple and short, allowing for users/organizations to reproduce, display, distribute, and create derivative works of the software.
+The main difference between Boost and the GPL is that Boost does not require that derivative works of a software under Boost licensing release the source 
+code of said derivative work. This in turn allows for proprietary companies and/or users to use Boost licensed software to create monetary software 
+without the assurance of open source code. I found this to be a problem, since I want my software, and potential future derivative software to be 
+open-source for users. 
+
+
+3 - MIT
+The MIT license is a license developed by MIT that is a highly permissive software license that promotes the distribution, use, modification, and selling
+of the software. this license is very similar to the GPL in the sense that it also promotes the open distribution of software. However, unlike
+the GPL, the MIT license does not ensure that derivative works also come under its umbrella, thus creating a barrier to open-source software
+distribution. For this reason, choosing between the GPL and MIT license boiled down to the level of future software license control that the GPL ensures.
+
